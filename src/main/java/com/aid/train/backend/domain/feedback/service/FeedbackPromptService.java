@@ -212,9 +212,14 @@ public class FeedbackPromptService {
                         
                         다음 JSON 형식으로 응답해주세요:
                         
+                        **중요: 점수 규칙**
+                        - 각 항목은 0-25점 범위
+                        - totalScore는 반드시 4개 항목의 합계와 정확히 일치해야 함
+                        - totalScore = speechRateScore + fillerWordsScore + politenessScore + clarityScore
+                        
                         ```json
                         {
-                          "totalScore": 전체점수(0-100),
+                          "totalScore": 전체점수(0-100, 반드시 아래 4개 점수의 합계),
                           "speechRateScore": 발화속도점수(0-25),
                           "fillerWordsScore": 추임새점수(0-25),
                           "politenessScore": 공손도점수(0-25),
@@ -297,6 +302,29 @@ public class FeedbackPromptService {
             int fillerWordsScore = jsonNode.get("fillerWordsScore").asInt();
             int politenessScore = jsonNode.get("politenessScore").asInt();
             int clarityScore = jsonNode.get("clarityScore").asInt();
+
+            // 점수 검증 및 자동 보정
+            int calculatedTotal = speechRateScore + fillerWordsScore + politenessScore + clarityScore;
+            if (totalScore != calculatedTotal) {
+                log.warn("AI 점수 불일치 감지 - sessionId: {}, totalScore: {}, calculated: {} (자동 보정)",
+                        dialogueSession.getSessionId(), totalScore, calculatedTotal);
+                
+                // totalScore를 계산된 합계로 보정
+                totalScore = calculatedTotal;
+                
+                // 100점을 초과하면 비율로 조정
+                if (totalScore > 100) {
+                    double ratio = 100.0 / totalScore;
+                    speechRateScore = (int) Math.round(speechRateScore * ratio);
+                    fillerWordsScore = (int) Math.round(fillerWordsScore * ratio);
+                    politenessScore = (int) Math.round(politenessScore * ratio);
+                    clarityScore = (int) Math.round(clarityScore * ratio);
+                    totalScore = speechRateScore + fillerWordsScore + politenessScore + clarityScore;
+                    
+                    log.info("점수 비율 조정 완료 - sessionId: {}, 조정된 totalScore: {}",
+                            dialogueSession.getSessionId(), totalScore);
+                }
+            }
 
             // 전체 대화 분석 파싱
             FeedbackResponse.OverallAnalysis overallAnalysis = parseOverallAnalysis(jsonNode.get("overallAnalysis"));

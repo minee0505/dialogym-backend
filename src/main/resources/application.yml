@@ -41,7 +41,9 @@ spring:
       api-key: ${OPENAI_API_KEY}
       chat:
         options:
-          model: ${OPENAI_MODEL:gpt-4o-mini}
+          # 피드백 생성용 모델 (일반 텍스트 분석용)
+          # gpt-realtime은 실시간 음성 대화 전용이므로 여기서는 사용 불가
+          model: ${OPENAI_MODEL:gpt-4o}
           temperature: ${OPENAI_TEMPERATURE:0.7}
           max-tokens: ${OPENAI_MAX_TOKENS:2000}
 
