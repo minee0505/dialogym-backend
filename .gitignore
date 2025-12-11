@@ -41,6 +41,7 @@ src/test/generated/
 
 ### 환경 변수 파일 (민감 정보) ###
 .env
+.env.production
 
 ### OS ###
 .DS_Store
