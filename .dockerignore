@@ -4,5 +4,4 @@
 .git
 .idea
 *.iml
-build/
 .gradle/
