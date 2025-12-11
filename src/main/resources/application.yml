@@ -84,7 +84,6 @@ spring:
             redirect-uri: "${OAUTH_REDIRECT_BASE_URL:http://localhost:9090}/login/oauth2/code/kakao"
             scope:
               - profile_nickname
-              - account_email
             client-name: Kakao
 
           naver:

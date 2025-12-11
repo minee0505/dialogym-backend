@@ -341,10 +341,21 @@ public class AuthService {
                 Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
                 @SuppressWarnings("unchecked")
                 Map<String, Object> profile = (Map<String, Object>) kakaoAccount.get("profile");
+                
+                // 카카오는 이메일 제공이 선택적이므로 없을 수 있음
+                String email = kakaoAccount != null ? (String) kakaoAccount.get("email") : null;
+                String nickname = profile != null ? (String) profile.get("nickname") : null;
+                
+                // 이메일이 없으면 providerId@kakao.temp 형식으로 임시 이메일 생성
+                if (email == null || email.isBlank()) {
+                    email = attributes.get("id") + "@kakao.temp";
+                    log.warn("카카오 이메일 미제공 - 임시 이메일 생성: {}", LogMaskingUtil.maskEmail(email));
+                }
+                
                 yield new SocialUserInfo(
                         String.valueOf(attributes.get("id")),
-                        (String) kakaoAccount.get("email"),
-                        (String) profile.get("nickname")
+                        email,
+                        nickname != null ? nickname : "카카오사용자"
                 );
             }
             case NAVER -> {
