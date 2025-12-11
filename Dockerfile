@@ -1,5 +1,5 @@
-# 1. 베이스 이미지 선택 (Java 17 Corretto)
-FROM amazoncorretto:17-alpine
+# 1. 베이스 이미지 선택 (Java 21 Corretto)
+FROM amazoncorretto:21-alpine
 
 # 2. 작업 디렉토리 설정
 WORKDIR /app
