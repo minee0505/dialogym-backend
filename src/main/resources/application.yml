@@ -171,6 +171,7 @@ app:
 
 # ===== CORS Configuration =====
 cors:
+  # 환경변수로 오버라이드 가능 (쉼표로 구분)
   allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5050}
   allowed-methods: GET,POST,PUT,PATCH,DELETE,OPTIONS
   allowed-headers: "*"
@@ -254,6 +255,9 @@ cookie:
   secure: false
   same-site: Lax
 
+cors:
+  allowed-origins: http://localhost:5050
+
 ---
 spring:
   config:
@@ -272,6 +276,9 @@ logging:
 cookie:
   secure: true
   same-site: Lax
+
+cors:
+  allowed-origins: http://localhost:5050,https://dialogym.shop,https://www.dialogym.shop
 
 ---
 spring:
@@ -297,3 +304,6 @@ cookie:
   secure: true
   same-site: None
   domain: .dialogym.shop
+
+cors:
+  allowed-origins: https://dialogym.shop,https://www.dialogym.shop

@@ -62,7 +62,7 @@ public class CorsConfig implements WebMvcConfigurer {
         CorsConfiguration configuration = new CorsConfiguration();
 
         // 허용할 Origin (프론트엔드 도메인)
-        // 예: http://localhost:3000, https://dialogym.com
+        // 예: http://localhost:5050, https://dialogym.shop, https://www.dialogym.shop
         configuration.setAllowedOrigins(Arrays.asList(allowedOrigins));
 
         // 허용할 HTTP 메서드
