@@ -120,7 +120,7 @@ public class GptSessionManager {
 
             log.debug("API Key 사용");
 
-            URI uri = new URI("wss://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview-2024-10-01");
+            URI uri = new URI("wss://api.openai.com/v1/realtime?model=gpt-realtime");
 
             CompletableFuture<WebSocketSession> future = standardClient.execute(
 
@@ -389,7 +389,7 @@ public class GptSessionManager {
         try {
             webRtcStateManager.updateState(sessionId, WebRtcStateManager.State.CONNECTING);
             log.info("connectToGptRealtime() 호출됨 - sessionId: {}", sessionId);
-            String gptUrl = "https://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview-2024-10-01";
+            String gptUrl = "https://api.openai.com/v1/realtime?model=gpt-realtime";
             HttpClient httpClient = HttpClient.newHttpClient();
 
             // offer sdp -> gpt 전송

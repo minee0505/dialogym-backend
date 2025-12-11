@@ -30,7 +30,7 @@ public class WebRtcPeerConnectionManager {
         try {
             log.info("GPT Realtime 연결 시작 - sessionId: {}", sessionId);
 
-            String gptUrl = "https://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview-2024-10-01";
+            String gptUrl = "https://api.openai.com/v1/realtime?model=gpt-realtime";
             HttpClient httpClient = HttpClient.newHttpClient();
 
             HttpRequest request = HttpRequest.newBuilder()

@@ -135,7 +135,7 @@ public class SessionCoordinator {
             // turnDetection을 null로 보내면 Manual 모드 (클라이언트가 직접 제어)
             // input_audio_transcription을 설정하여 STT 활성화
             RealtimeSession session = RealtimeSession.builder()
-                    .model("gpt-4o-realtime-preview-2024-10-01")
+                    .model("gpt-realtime")
                     .instructions(instructions)
                     .voice(scenario.getVoice().name().toLowerCase())
                     .turnDetection(null)  // null = Manual 모드
